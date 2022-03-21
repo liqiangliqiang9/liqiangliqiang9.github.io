@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('doc生成javaBean')" />
+    <script src="../../../static/js/common.js"></script>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form class="form-horizontal " id="docToBavaBeanRQ">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red; ">*</span>表名：</label>
+                            <div class="col-sm-10">
+                                <input name="tableName" class="form-control" type="text" placeholder="表名称" maxlength="100"required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red; "></span>表注释：</label>
+                            <div class="col-sm-10">
+                                <input name="tableComment" class="form-control" type="text" placeholder="请输入表注释" maxlength="50"  >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">doc：</label>
+                            <div class="col-sm-10">
+                                <textarea name="requestStr" wrap="off" class="form-control" style="height: 200px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-rounded btn-sm" onclick="docToJavabean()" shiro:hasPermission="gencode:doctojavabean:gen"><i class="fa fa-search"></i>&nbsp;生成</a>
+                    <a class="btn btn-warning btn-rounded btn-sm" onclick="resetForm();"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                <form class="form-horizontal " id="form-docToBavaBeanRS">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" onclick="copyStr('remarkrq')">结果：</label>
+                        <div class="col-sm-11">
+                            <textarea name="remarkrq" id="remarkrq" wrap="off"   class="form-control" style="height: 333px;"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+
+        $(function() {
+
+        });
+        function copyStr(id) {
+            try {
+                $("#" + id).select();
+                document.execCommand("copy");
+                $.modal.msgSuccess("复制成功");
+            } catch (e) {
+                $.modal.alertError("复制失败！");
+            }
+        }
+
+        function  resetForm() {
+            $('form')[0].reset();
+            $('form')[1].reset();
+
+        }
+
+        function docToJavabean() {
+            if ($.validate.form()) {
+
+                var data = $.common.formToJSON("docToBavaBeanRQ");
+                console.log(data);
+                var requestStr = data.requestStr;//字段信息
+                var tableName = data.tableName;//表名
+                var tableComment = data.tableComment;//表注释
+                var split = requestStr.split("\r\n");
+                var strGeneral = "";
+                if("" != tableName){
+                    strGeneral +="CREATE TABLE `"+tableName+"` (\n"
+                }else{
+                    alert("表名不能为空")
+                    return;
+                }
+                //跳过第一行，i从1开始
+                for(var i=1;i<split.length;i++){
+                    var s = split[i];
+                    //console.log(s);
+                    //跳过空行
+                    if(s.trim().length>0){
+                        var excelemptyStrSplit = s.split("\t");
+                        //console.log(excelemptyStrSplit)
+                        for (let index=0; index < excelemptyStrSplit.length; index++) {
+                            var elem = excelemptyStrSplit[index];
+                            if(excelemptyStrSplit[0]=="id"){
+                                strGeneral +="`id` bigint(20) NOT NULL AUTO_INCREMENT,"
+                                break;
+                            }
+                           if (index==0){
+                               strGeneral += "`"+elem+"` "
+                           }
+                           if(index==1){
+                               strGeneral += elem+" "
+                           }
+                            if(index==2){
+                                if(""!=elem){
+                                    strGeneral += "DEFAULT "+elem+" "
+                                }
+                                if(""==elem && "NO"!=excelemptyStrSplit[3]){
+                                    strGeneral += "DEFAULT NULL "
+                                }
+
+                            }
+                            if(index==3){
+                                if("NO"==elem){
+                                    strGeneral += "NOT NULL "
+                                }
+                                if("YES"==elem){
+
+                                }
+                            }
+
+                            if(index==5){
+                                if(""!=elem){
+                                    strGeneral += "COMMENT '"+elem+"' ,\n";
+                                }
+                                if(""==elem){
+                                    strGeneral +=" ,\n";
+                                }
+                            }
+                        }
+
+                    }
+                }
+                strGeneral +="PRIMARY KEY (`id`)\n"
+                strGeneral +=")\n"
+                if("" != tableComment){
+                    strGeneral +="COMMENT='"+tableComment+"';"
+                }
+                    $("#remarkrq").val(strGeneral);
+            }else {
+                alert("失败")
+            }
+        }
+
+        String.prototype.format = function(args) {
+            var result = this;
+            if (arguments.length < 1) {
+                return result;
+            }
+            var data = arguments;        //如果模板参数是数组
+            if (arguments.length == 1 && typeof (args) == "object") {
+                //如果模板参数是对象
+                data = args;
+            }
+            for (var key in data) {
+                var value = data[key];
+                if (undefined != value) {
+                    result = result.replace("{" + key + "}", value);
+                }
+            }
+            return result;
+        }
+        /**
+         * 验证是否非空，空 true 非空 false
+         * @param value
+         * @returns {boolean|*}
+         */
+        function valEmpty(value){
+            if(typeof value === 'undefined' || value === null || value === ""){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

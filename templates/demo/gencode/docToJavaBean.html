@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('doc生成javaBean')" />
+    <script src="../../../static/js/common.js"></script>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form class="form-horizontal " id="docToBavaBeanRQ">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>参数列：</label>
+                            <div class="col-sm-8">
+                                <input name="filedColumnNum" class="form-control" type="text" placeholder="参数在第几列，从0开始，默认第一列" maxlength="100" value="0" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>作者：</label>
+                            <div class="col-sm-8">
+                                <input name="author" class="form-control" type="text" placeholder="请输入作者" maxlength="50" value="LiQ"  required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">替换字符：</label>
+                            <div class="col-sm-8">
+                                <input name="replaceStr" class="form-control" type="text" placeholder="请输入替换字符" maxlength="50" value="header." >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>json注释：</label>
+                            <div class="col-sm-8">
+                                <select class='form-control' id="addJsonProperty"placeholder="是否添加json注释"  name='addJsonProperty' style="width: 100%">
+                                    <option value="true" >添加</option>
+                                    <option value="false" >不添加</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>excel注释：</label>
+                            <div class="col-sm-8">
+                                <select class='form-control' id="addExcelProperty"placeholder="是否添加excel注释"  name='addExcelProperty' style="width: 100%">
+                                    <option value="true" >添加</option>
+                                    <option value="false" >不添加</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>字段名称列：</label>
+                            <div class="col-sm-8">
+                                <input name="filedNameNum" class="form-control" type="text" placeholder="字段名称（例:用户姓名）在第几列，从0开始，默认第一列" maxlength="100" value="0" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">doc：</label>
+                            <div class="col-sm-11">
+                                <textarea name="requestStr" wrap="off" class="form-control" style="height: 260px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-rounded btn-sm" onclick="docToJavabean()"><i class="fa fa-search"></i>&nbsp;生成</a>
+                    <a class="btn btn-warning btn-rounded btn-sm" onclick="resetForm();"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                <form class="form-horizontal " id="form-docToBavaBeanRS">
+<!--                    <div class="form-group">
+                        <label class="col-sm-1 control-label">负责人手机：</label>
+                        <div class="col-sm-5">
+                            <input name="phone" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">操作URL：</label>
+                        <div class="col-sm-5">
+                            <textarea name="provrequest" wrap="off" class="form-control"></textarea>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" onclick="copyStr('remarkrq')">结果：</label>
+                        <div class="col-sm-11">
+                            <textarea name="remarkrq" id="remarkrq" wrap="off"   class="form-control" style="height: 333px;"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+
+        $(function() {
+
+        });
+        function copyStr(id) {
+            try {
+                $("#" + id).select();
+                document.execCommand("copy");
+                $.modal.msgSuccess("复制成功");
+            } catch (e) {
+                $.modal.alertError("复制失败！");
+            }
+        }
+
+        function  resetForm() {
+            $('form')[0].reset();
+            $('form')[1].reset();
+
+        }
+
+        function docToJavabean() {
+            if ($.validate.form()) {
+
+                var data = $.common.formToJSON("docToBavaBeanRQ");
+                console.log(data);
+                var requestStr = data.requestStr;//字段信息
+                var jsonProp = data.addJsonProperty;//是否添加JSON注释
+                var filedColumnNum = data.filedColumnNum;//字段所在列,从0开始
+                var excelProp = data.addExcelProperty;//是否添加Excel注释
+                var filedNameNum = data.filedNameNum;//字段名称所在列,从0开始
+                var replaceStr = data.replaceStr;//替换字符串
+                var split = requestStr.split("\r\n");
+                var beanFieldTempl = genBeanFieldTemp(split[0],jsonProp,excelProp);
+                var strGeneral = "";
+                //跳过第一行，i从1开始
+                for(var i=1;i<split.length;i++){
+                    var s = split[i];
+                    //console.log(s);
+                    //跳过空行
+                    if(s.trim().length>0){
+                        var excelemptyStrSplit = s.split("\t");
+                        //console.log(excelemptyStrSplit);
+                        var p0 = excelemptyStrSplit[filedColumnNum].replace(replaceStr,"");
+                        //是否添加@JsonProperty注解
+                        if("true"==jsonProp){
+                            excelemptyStrSplit.push(p0);
+                        }
+                        var p1 = excelemptyStrSplit[filedNameNum].replace(replaceStr,"");
+                        //是否添加@Excel注解
+                        if("true"==excelProp){
+                            excelemptyStrSplit.push(p1);
+                        }
+                        excelemptyStrSplit.push(p0);
+                        strGeneral += beanFieldTempl.format(excelemptyStrSplit);
+                    }
+                }
+                $("#remarkrq").val(strGeneral);
+            }else {
+                alert("失败")
+            }
+        }
+        //根据标题头生成bean里的字段模版
+        function genBeanFieldTemp(titleStr,addJsonProperty,addExcelProperty){
+            var beanFieldTemple =
+                "    /**\n";
+            var titleStrSplit = titleStr.split("\t");
+            for (var i = 0; i < titleStrSplit.length; i++) {
+                beanFieldTemple +=  "     * "+titleStrSplit[i]+"：{"+i+"}\n";
+            }
+            beanFieldTemple +=  "     */\n";
+            //用于拼接参数的位置计数 {paramIndex}
+            var paramIndex = titleStrSplit.length;
+            //是否添加@JsonProperty注解
+            if("true"==addJsonProperty){
+                beanFieldTemple +=  "    @JsonProperty(\"{"+(paramIndex++)+"}\")\n";
+            }
+            //是否添加@Excel注解
+            if("true"==addExcelProperty){
+                beanFieldTemple +=  "    @Excel(\"{"+(paramIndex++)+"}\")\n";
+            }
+            beanFieldTemple +=  "    private String {"+(paramIndex++)+"};\n";
+            //console.log(beanFieldTemple);
+            return beanFieldTemple;
+        }
+        String.prototype.format = function(args) {
+            var result = this;
+            if (arguments.length < 1) {
+                return result;
+            }
+            var data = arguments;        //如果模板参数是数组
+            if (arguments.length == 1 && typeof (args) == "object") {
+                //如果模板参数是对象
+                data = args;
+            }
+            for (var key in data) {
+                var value = data[key];
+                if (undefined != value) {
+                    result = result.replace("{" + key + "}", value);
+                }
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>
