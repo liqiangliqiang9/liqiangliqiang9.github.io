@@ -6,7 +6,7 @@ layer.config({
     extend: 'moon/style.css',
     skin: 'layer-ext-moon'
 });
-
+var project_name = "/static/"
 var isMobile = false;
 var sidebarHeight = isMobile ? '100%' : '96%';
 
@@ -502,7 +502,7 @@ $(function() {
     // 锁定屏幕
     $('#lockScreen').on('click', function () {
     	storage.set('lockPath', $('.page-tabs-content').find('.active').attr('data-id'));
-    	location.href  = ctx + "lockscreen";
+    	location.href  = project_name + "lockscreen";
     });
 
     // 页签刷新按钮
