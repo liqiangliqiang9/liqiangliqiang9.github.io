@@ -265,6 +265,7 @@
 </div>
 <!--[if lte IE 8]><script>window.location.href=ctx+'html/ie.html';</script><![endif]-->
 <!-- 全局js -->
+<script src="../static/js/common.js"></script>
 <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script src="../static/js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
@@ -278,7 +279,7 @@
 <script src="../static/ajax/libs/fullscreen/jquery.fullscreen.js" th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script th:inline="javascript">
 window.history.forward(1);
-var ctx = "/ruoyi-ui/templates/"; 
+//var ctx = "/ruoyi-ui/templates/"; 
 /*var lockscreen = [[${session.lockscreen}]]; 
 if(lockscreen){window.top.location=ctx+"lockscreen";}*/
 // 皮肤缓存
