@@ -13,11 +13,11 @@
 <body class="lockscreen">
 <div class="lockscreen-wrapper">
     <div class="lockscreen-time"></div>
-    <div class="lockscreen-name">[[ ${user.loginName} ]] / [[${#strings.defaultString(user.userName, '-')}]]</div>
+    <div class="lockscreen-name">admin / 若依</div>
 
     <div class="lockscreen-item">
         <div class="lockscreen-image">
-            <img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
+            <img src="../static/img/profile.jpg" onerror="this.src='../static/img/profile.jpg'" class="img-circle" alt="User Image">
         </div>
         <form class="lockscreen-credentials" method="post" action="#" onsubmit="return false;">
             <div class="input-group">
@@ -34,6 +34,7 @@
         <a th:href="@{logout}">退出重新登录</a>
     </div>
 </div>
+<script src="../static/js/common.js"></script>
 <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script src="../static/js/three.min.js" th:src="@{/js/three.min.js}"></script>
@@ -41,7 +42,7 @@
 <script src="../static/ruoyi/js/ry-ui.js" th:src="@{/ruoyi/js/ry-ui.js?v=4.7.3}"></script>
 </body>
 <script th:inline="javascript">
-    var ctx = [[@{/}]];
+    //var ctx = [[@{/}]];
     Date.prototype.format = function(fmt) {
 	  var o = {
 	    "M+" : this.getMonth()+1,                 //月份
@@ -107,7 +108,15 @@
                 layer.close(index);
             }
         };
-        $.ajax(config);
+        //$.ajax(config);
+        index = layer.load(2, {shade: false});
+        if("123456"==password){
+            location.href = ctx + 'index.html';
+        }else {
+            $.modal.msg("解锁密码不正确！123456");
+            $("input[name='password']").val("");
+        }
+        layer.close(index);
     };
 
     var container;
