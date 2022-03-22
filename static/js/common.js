@@ -1,5 +1,5 @@
 /*include.html 文件中的header 和footer模块引用*/
-var project_name = "/ruoyi-ui/static"
+var project_name = "/static"
 
     document.write("<meta charset='utf-8'>");
     document.write("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");

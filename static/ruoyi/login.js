@@ -1,4 +1,4 @@
-var project_name = "/static/"
+var ctx = "/templates/"
 $(function() {
     validateKickout();
     validateRule();
@@ -20,9 +20,9 @@ function login() {
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
     var rememberMe = $("input[name='rememberme']").is(':checked');
-    console.log(project_name)
+    console.log(ctx)
     if (web_status.SUCCESS == web_status.SUCCESS) {
-        location.href = project_name + 'index.html';
+        location.href = ctx + 'index.html';
     } else {
         $('.imgcode').click();
         $(".code").val("");
