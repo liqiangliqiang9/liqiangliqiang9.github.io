@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('表格列拖拽操作')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','表格列拖拽操作')</script>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -18,9 +20,9 @@
 			</div>
 		</div>
 	</div>
-    <div th:include="include :: footer"></div>
-    <script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
-    <th:block th:include="include :: bootstrap-table-reorder-columns-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('jquery-ui')</script>
+    <script >includeResourse('bootstrap-table-reorder-columns-js')</script>
     <script th:inline="javascript">
         var prefix = ctx + "demo/table";
         var datas = [[${@dict.getType('sys_normal_disable')}]];

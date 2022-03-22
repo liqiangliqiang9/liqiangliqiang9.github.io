@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('表格数据汇总')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','表格数据汇总')</script>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,14 +13,16 @@
 			</div>
 		</div>
 	</div>
-    <div th:include="include :: footer"></div>
+    <script >includeResourse('footer')</script>
     <script th:inline="javascript">
         var prefix = ctx + "demo/table";
-        var datas = [[${@dict.getType('sys_normal_disable')}]];
+        var datas = [{"searchValue":null,"createBy":"admin","createTime":"2018-03-16 03:33:00","updateBy":null,"updateTime":null,"remark":"\u6B63\u5E38\u72B6\u6001","params":{},"dictCode":6,"dictSort":1,"dictLabel":"\u6B63\u5E38","dictValue":"0","dictType":"sys_normal_disable","cssClass":null,"listClass":"primary","isDefault":"Y","status":"0","default":true},{"searchValue":null,"createBy":"admin","createTime":"2018-03-16 03:33:00","updateBy":null,"updateTime":null,"remark":"\u505C\u7528\u72B6\u6001","params":{},"dictCode":7,"dictSort":2,"dictLabel":"\u505C\u7528","dictValue":"1","dictType":"sys_normal_disable","cssClass":null,"listClass":"danger","isDefault":"N","status":"0","default":false}];
+
 
         $(function() {
             var options = {
-                url: prefix + "/list",
+                //url: prefix + "/list",
+                data:getData(),
 		        showFooter: true,
 		        showSearch: false,
 		        showRefresh: false,
@@ -89,6 +93,11 @@
         	        css: { color: 'red', 'font-weight': 'normal' }
         	    }
         	}[column.field]
+          }
+
+          function getData(){
+          	var dataArry = {"total":26,"rows":[{"userId":1,"userCode":"1000001","userName":"测试1","userSex":"0","userPhone":"15888888888","userEmail":"ry@qq.com","userBalance":150.0,"status":"0","createTime":"2022-03-17 01:32:36"},{"userId":2,"userCode":"1000002","userName":"测试2","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":180.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":3,"userCode":"1000003","userName":"测试3","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":110.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":4,"userCode":"1000004","userName":"测试4","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":220.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":5,"userCode":"1000005","userName":"测试5","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":140.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":6,"userCode":"1000006","userName":"测试6","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":330.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":7,"userCode":"1000007","userName":"测试7","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":160.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":8,"userCode":"1000008","userName":"测试8","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":170.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":9,"userCode":"1000009","userName":"测试9","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":180.0,"status":"1","createTime":"2022-03-17 01:32:36"},{"userId":10,"userCode":"1000010","userName":"测试10","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":210.0,"status":"1","createTime":"2022-03-17 01:32:36"}],"code":0,"msg":null}
+          	return dataArry;
           }
     </script>
 </body>

@@ -3,6 +3,9 @@
 <head>
 	<th:block th:include="include :: header('Summernote富文本编辑器')" />
 	<th:block th:include="include :: summernote-css" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','Summernote富文本编辑器')</script>
+    <script >includeResourse('summernote-css')</script>
 </head>
 <body class="gray-bg">
     <div class="wrapper wrapper-content">
@@ -68,8 +71,8 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: summernote-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('summernote-js')</script>
     <script>
         $(document).ready(function () {
             $('.summernote').summernote({

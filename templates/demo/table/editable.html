@@ -3,6 +3,8 @@
 <head>
 	<th:block th:include="include :: header('表格行内编辑')" />
 	<th:block th:include="include :: bootstrap-editable-css" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','表格行内编辑')</script>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -21,8 +23,8 @@
 		</div>
 	</div>
 	
-	<th:block th:include="include :: footer" />
-	<th:block th:include="include :: bootstrap-table-editable-js" />
+	<script >includeResourse('footer')</script>
+	<script >includeResourse('bootstrap-table-editable-js')</script>
 	
     <script th:inline="javascript">
         var prefix = ctx + "demo/table";

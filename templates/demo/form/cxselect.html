@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
 	<th:block th:include="include :: header('多级联动下拉')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','多级联动下拉')</script>
 </head>
 <body class="gray-bg">
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -78,8 +80,8 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: jquery-cxselect-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('jquery-cxselect-js')</script>
     <script th:inline="javascript">
         // 直接返回获取
    		var data = [[${data}]];

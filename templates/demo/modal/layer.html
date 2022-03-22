@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
 	<th:block th:include="include :: header('弹层组件')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','弹层组件')</script>
 	<style>
         /* 解决layer相册层弹出时导致页面自动滚动 */
         html {height: auto;}
@@ -136,7 +138,7 @@
 	        
 	    </div>
 	</div>
-    <th:block th:include="include :: footer" />
+    <script >includeResourse('footer')</script>
     <script type="text/javascript">
         var prefix = ctx + "demo/modal";
         

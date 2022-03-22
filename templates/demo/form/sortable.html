@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
 	<th:block th:include="include :: header('拖动排序')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','拖动排序')</script>
 </head>
 <body class="gray-bg">
     <div class="wrapper wrapper-content  animated fadeInRight">
@@ -187,8 +189,8 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('common')</script>
     <script>
 	    $(document).ready(function () {
 	        $(".sortable-list").sortable({connectWith: ".connectList"}).disableSelection()

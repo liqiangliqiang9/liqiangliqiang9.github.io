@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('线状图')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','线状图')</script>
 </head>
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInDown">
@@ -173,8 +175,8 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: sparkline-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('sparkline-js')</script>
     <script type="text/javascript">
 	    $(function () {
 	        $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52, 25], {

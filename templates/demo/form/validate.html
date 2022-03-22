@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
 	<th:block th:include="include :: header('表单校验')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','表单校验')</script>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -132,7 +134,7 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
+    <script >includeResourse('footer')</script>
     <script type="text/javascript">
     $(function(){
         $("#commentForm").validate();

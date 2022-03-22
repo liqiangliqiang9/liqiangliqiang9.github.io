@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('点击按钮加载表格')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','点击按钮加载表格')</script>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -27,14 +29,15 @@
 			</div>
 		</div>
 	</div>
-    <div th:include="include :: footer"></div>
+    <script >includeResourse('footer')</script>
     <script th:inline="javascript">
         var prefix = ctx + "demo/table";
-        var datas = [[${@dict.getType('sys_normal_disable')}]];
+        var datas = [{"searchValue":null,"createBy":"admin","createTime":"2018-03-16 03:33:00","updateBy":null,"updateTime":null,"remark":"\u6B63\u5E38\u72B6\u6001","params":{},"dictCode":6,"dictSort":1,"dictLabel":"\u6B63\u5E38","dictValue":"0","dictType":"sys_normal_disable","cssClass":null,"listClass":"primary","isDefault":"Y","status":"0","default":true},{"searchValue":null,"createBy":"admin","createTime":"2018-03-16 03:33:00","updateBy":null,"updateTime":null,"remark":"\u505C\u7528\u72B6\u6001","params":{},"dictCode":7,"dictSort":2,"dictLabel":"\u505C\u7528","dictValue":"1","dictType":"sys_normal_disable","cssClass":null,"listClass":"danger","isDefault":"N","status":"0","default":false}];
 
         function query() {
             var options = {
-                url: prefix + "/list",
+                //url: prefix + "/list",
+                data: getData(),
 		        showSearch: false,
 		        showRefresh: false,
 		        showToggle: false,
@@ -86,6 +89,10 @@
 		        }]
             };
             $.table.init(options);
+        }
+        function getData(){
+        	var dataArry =  [{"userId":1,"userCode":"1000001","userName":"\u6D4B\u8BD51","userSex":"0","userPhone":"15888888888","userEmail":"ry@qq.com","userBalance":150.0,"status":"0","createTime":"2022-03-16 17:32:36"},{"userId":2,"userCode":"1000002","userName":"\u6D4B\u8BD52","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":180.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":3,"userCode":"1000003","userName":"\u6D4B\u8BD53","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":110.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":4,"userCode":"1000004","userName":"\u6D4B\u8BD54","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":220.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":5,"userCode":"1000005","userName":"\u6D4B\u8BD55","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":140.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":6,"userCode":"1000006","userName":"\u6D4B\u8BD56","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":330.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":7,"userCode":"1000007","userName":"\u6D4B\u8BD57","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":160.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":8,"userCode":"1000008","userName":"\u6D4B\u8BD58","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":170.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":9,"userCode":"1000009","userName":"\u6D4B\u8BD59","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":180.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":10,"userCode":"1000010","userName":"\u6D4B\u8BD510","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":210.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":11,"userCode":"1000011","userName":"\u6D4B\u8BD511","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":110.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":12,"userCode":"1000012","userName":"\u6D4B\u8BD512","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":120.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":13,"userCode":"1000013","userName":"\u6D4B\u8BD513","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":380.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":14,"userCode":"1000014","userName":"\u6D4B\u8BD514","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":280.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":15,"userCode":"1000015","userName":"\u6D4B\u8BD515","userSex":"0","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":570.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":16,"userCode":"1000016","userName":"\u6D4B\u8BD516","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":260.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":17,"userCode":"1000017","userName":"\u6D4B\u8BD517","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":210.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":18,"userCode":"1000018","userName":"\u6D4B\u8BD518","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":340.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":19,"userCode":"1000019","userName":"\u6D4B\u8BD519","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":160.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":20,"userCode":"1000020","userName":"\u6D4B\u8BD520","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":220.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":21,"userCode":"1000021","userName":"\u6D4B\u8BD521","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":120.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":22,"userCode":"1000022","userName":"\u6D4B\u8BD522","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":130.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":23,"userCode":"1000023","userName":"\u6D4B\u8BD523","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":490.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":24,"userCode":"1000024","userName":"\u6D4B\u8BD524","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":570.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":25,"userCode":"1000025","userName":"\u6D4B\u8BD525","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":250.0,"status":"1","createTime":"2022-03-16 17:32:36"},{"userId":26,"userCode":"1000026","userName":"\u6D4B\u8BD526","userSex":"1","userPhone":"15666666666","userEmail":"ry@qq.com","userBalance":250.0,"status":"1","createTime":"2022-03-16 17:32:36"}];
+        	return dataArry;
         }
     </script>
 </body>

@@ -3,6 +3,9 @@
 <head>
 	<th:block th:include="include :: header('日期和时间')" />
 	<th:block th:include="include :: datetimepicker-css" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','日期和时间')</script>
+    <script >includeResourse('datetimepicker-css')</script>
 </head>
 <body class="gray-bg">
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -118,8 +121,8 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('datetimepicker-js')</script>
     <script type="text/javascript">
         $(function(){
         	<!-- datetimepicker示例 -->

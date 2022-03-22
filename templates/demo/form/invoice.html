@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
 	<th:block th:include="include :: header('单据打印')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','单据打印')</script>
 </head>
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -112,7 +114,7 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
+    <script >includeResourse('footer')</script>
     <script type="text/javascript">
         function printPage() {
             window.print();

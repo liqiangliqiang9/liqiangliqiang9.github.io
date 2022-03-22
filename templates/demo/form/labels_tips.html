@@ -2,6 +2,8 @@
 <html lang="zh">
 <head>
 	<th:block th:include="include :: header('标签 & 提示')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','标签 & 提示')</script>
 </head>
 <body class="gray-bg">
     <div class="wrapper wrapper-content animated fadeIn">
@@ -228,7 +230,7 @@
         </div>
         
     </div>
-    <th:block th:include="include :: footer" />
+    <script >includeResourse('footer')</script>
     <script type="text/javascript">
 	    $("[data-toggle='tooltip']").tooltip();
 	    $("[data-toggle=popover]").popover();

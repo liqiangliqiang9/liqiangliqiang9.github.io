@@ -3,6 +3,9 @@
 <head>
 	<th:block th:include="include :: header('表格搜索')" />
 	<th:block th:include="include :: bootstrap-select-css" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','表格搜索')</script>
+	<script >includeResourse('header','bootstrap-select-css')</script>
 </head>
 <body class="gray-bg">
     <div class="container-div">
@@ -185,9 +188,9 @@
 			</div>
 		</div>
 	</div>
-	<th:block th:include="include :: footer" />
-	<th:block th:include="include :: bootstrap-select-js" />
-	<th:block th:include="include :: jquery-cxselect-js" />
+	<script >includeResourse('footer')</script>
+	<script >includeResourse('bootstrap-select-js')</script>
+	<script >includeResourse('jquery-cxselect-js')</script>
 
 	<script th:inline="javascript">
 	    // 直接返回获取

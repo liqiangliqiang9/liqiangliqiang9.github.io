@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('表格行拖拽操作')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','表格行拖拽操作')</script>
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -19,8 +21,8 @@
 			</div>
 		</div>
 	</div>
-    <div th:include="include :: footer"></div>
-    <th:block th:include="include :: bootstrap-table-reorder-rows-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('bootstrap-table-reorder-rows-js')</script>
     <script th:inline="javascript">
         var prefix = ctx + "demo/table";
         var datas = [[${@dict.getType('sys_normal_disable')}]];

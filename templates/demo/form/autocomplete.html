@@ -3,6 +3,7 @@
 <head>
 	<th:block th:include="include :: header('搜索自动补全')" />
 	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','搜索自动补全')</script>
 </head>
 <body class="gray-bg">
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -153,9 +154,9 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: bootstrap-suggest-js" />
-    <th:block th:include="include :: bootstrap-typeahead-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('bootstrap-suggest-js')</script>
+    <script >includeResourse('bootstrap-typeahead-js')</script>
     <script type="text/javascript">
         
 	    var testBsSuggest = $("#suggest-demo-1").bsSuggest({

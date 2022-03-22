@@ -6,7 +6,7 @@ layer.config({
     extend: 'moon/style.css',
     skin: 'layer-ext-moon'
 });
-var ctx = "/templates/"
+
 var isMobile = false;
 var sidebarHeight = isMobile ? '100%' : '96%';
 

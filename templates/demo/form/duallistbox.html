@@ -3,6 +3,9 @@
 <head>
 	<th:block th:include="include :: header('左右互选组件')" />
 	<th:block th:include="include :: bootstrap-duallistbox-css" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','左右互选组件')</script>
+    <script >includeResourse('bootstrap-duallistbox-css')</script>
 </head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
@@ -43,8 +46,8 @@
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: bootstrap-duallistbox-js" />
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('bootstrap-duallistbox-js')</script>
     <script type="text/javascript">
 	    $('.dual_select').bootstrapDualListbox({
 	    	nonSelectedListLabel: '未有用户',

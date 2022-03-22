@@ -2,6 +2,9 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('新增用户')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','新增用户')</script>
+
 </head>
 <body>
     <div class="main-content">
@@ -90,7 +93,7 @@
             </div>
         </form>
     </div>
-	<th:block th:include="include :: footer" />
+	<script >includeResourse('footer')</script>
     <script type="text/javascript">
         function submitHandler() {
         	if ($.validate.form()) {

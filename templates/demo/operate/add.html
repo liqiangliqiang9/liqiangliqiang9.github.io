@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('新增用户')" />
+	<script src="../../../static/js/common.js"></script>
+	<script >includeResourse('header','新增用户')</script>
 </head>
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -51,7 +53,7 @@
 			</div>
 		</form>
 	</div>
-	<th:block th:include="include :: footer" />
+	<script >includeResourse('footer')</script>
 	<script type="text/javascript">
 		var prefix = ctx + "demo/operate";
 		
