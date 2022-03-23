@@ -250,6 +250,9 @@ function includeResourse(typeInfo,titleText){
     if("jquery.tmpl.js"==typeInfo){
         document.write("<script src=\'"+ctx_static+"/js/jquery.tmpl.js'></script>");
     }
+    if("flot"==typeInfo){
+        document.write("<script src=\'"+ctx_static+"/ajax/libs/flot/jquery.flot.js'></script>");
+    }
 }
 
 
