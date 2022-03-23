@@ -1,6 +1,14 @@
 /*include.html 文件中的header 和footer模块引用*/
+//全局静态资源路径
 var ctx_static = "/static"
+//全局html资源领
 var ctx = "/templates/"
+//全局数据信息保存
+var ctx_data = {
+    "version":"4.7.3",
+    "copyrightYear":"2022"
+}
+
 /**
  * 资源加载方法
  * typeInfo 资源加载类型 header、footer

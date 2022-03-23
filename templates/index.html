@@ -382,6 +382,8 @@ $(function() {
 		});
 	}*/
 	$("[data-toggle='tooltip']").tooltip();
+
+	document.body.innerHTML = document.body.innerHTML.replace("[[${copyrightYear}]]", ctx_data.copyrightYear);
 });
 </script>
 </body>
