@@ -21,12 +21,12 @@ function login() {
     var validateCode = $("input[name='validateCode']").val();
     var rememberMe = $("input[name='rememberme']").is(':checked');
     console.log(ctx)
-    if (web_status.SUCCESS == web_status.SUCCESS) {
+    if ("123456"==password) {
         location.href = ctx + 'index.html';
     } else {
         $('.imgcode').click();
         $(".code").val("");
-        $.modal.msg(r.msg);
+        $.modal.msg("帐号或密码不正确123456");
     }
     $.modal.closeLoading();
     /*
