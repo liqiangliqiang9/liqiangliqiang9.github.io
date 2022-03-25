@@ -105,10 +105,18 @@
         </div>
     </div>
     <script >includeResourse('footer')</script>
+    <script >includeResourse('jsutils')</script>
     <script th:inline="javascript">
+        var exampleStr = 
+                    "标签名\t名称\t数据类型\t必填\t说明\r\n" +
+                    "requestId\t请求标识\tString\t是\t\r\n" +
+                    "sysCode\t授权码\tString\t是\t其他接口使用\r\n" +
+                    "msg\t消息\tString\t否\t失败后显示失败原因\r\n" +
+                    "status\t状态码\tString\t是\t详细见状态码说明\r\n" +
+                    "effectNo\t当前票号\tString\t是\t";
 
         $(function() {
-
+            $("textarea[name='requestStr']").attr("placeholder", exampleStr);
         });
         function copyStr(id) {
             try {
@@ -130,6 +138,10 @@
             if ($.validate.form()) {
 
                 var data = $.common.formToJSON("docToBavaBeanRQ");
+                if(isEmpty(data.requestStr)){
+                    $("textarea[name='requestStr']").val(exampleStr)
+                    data.requestStr = exampleStr;
+                }
                 console.log(data);
                 var requestStr = data.requestStr;//字段信息
                 var jsonProp = data.addJsonProperty;//是否添加JSON注释
@@ -189,24 +201,6 @@
             beanFieldTemple +=  "    private String {"+(paramIndex++)+"};\n";
             //console.log(beanFieldTemple);
             return beanFieldTemple;
-        }
-        String.prototype.format = function(args) {
-            var result = this;
-            if (arguments.length < 1) {
-                return result;
-            }
-            var data = arguments;        //如果模板参数是数组
-            if (arguments.length == 1 && typeof (args) == "object") {
-                //如果模板参数是对象
-                data = args;
-            }
-            for (var key in data) {
-                var value = data[key];
-                if (undefined != value) {
-                    result = result.replace("{" + key + "}", value);
-                }
-            }
-            return result;
         }
     </script>
 </body>

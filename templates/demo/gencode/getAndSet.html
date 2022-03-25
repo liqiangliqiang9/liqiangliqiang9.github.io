@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('docToSetGet')" />
+        <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','docToSetGet')</script>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form class="form-horizontal " id="docToBavaBeanRQ">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>set列：</label>
+                            <div class="col-sm-8">
+                                <input name="columnset" class="form-control" type="text" placeholder="set所在列,从0开始" maxlength="50" value="0"  required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>set名：</label>
+                            <div class="col-sm-8">
+                                <input name="nameset" class="form-control" type="text" placeholder="set对象,名称" maxlength="100" value="target" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>get列：</label>
+                            <div class="col-sm-8">
+                                <input name="columnget" class="form-control" type="text" placeholder="get所在列,从0开始" maxlength="50" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label"><span style="color: red; ">*</span>get名：</label>
+                            <div class="col-sm-8">
+                                <input name="nameget" class="form-control" type="text" placeholder="get对象,名称" maxlength="100" value="source" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">替换字符：</label>
+                            <div class="col-sm-8">
+                                <input name="replaceStr" class="form-control" type="text" placeholder="请输入替换字符" maxlength="50" value="header." >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">doc：</label>
+                            <div class="col-sm-10">
+                                <textarea name="requestStr" wrap="off" class="form-control" style="height: 200px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-rounded btn-sm" onclick="docToJavabean()" shiro:hasPermission="gencode:doctojavabean:genclass"><i class="fa fa-search"></i>&nbsp;生成</a>
+                    <a class="btn btn-warning btn-rounded btn-sm" onclick="resetForm();"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                <form class="form-horizontal " id="form-docToBavaBeanRS">
+<!--                    <div class="form-group">
+                        <label class="col-sm-1 control-label">负责人手机：</label>
+                        <div class="col-sm-5">
+                            <input name="phone" class="form-control" type="text">
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">操作URL：</label>
+                        <div class="col-sm-5">
+                            这个是说明啊啊 啊啊啊啊 loram
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" onclick="copyStr('remarkrq')">结果：</label>
+                        <div class="col-sm-11">
+                            <textarea name="remarkrq" id="remarkrq" wrap="off"   class="form-control" style="height: 333px;"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('jsutils')</script>
+    <script th:inline="javascript">
+        /** 示例代码*/
+        var exampleStr = 
+                    "requestId\t请求标识\trequestid\t\t是\t\r\n" +
+                    "sysCode\t授权码\tsyscode\t是\t其他接口使用\r\n" +
+                    "status\t状态码\tstatus\t是\t详细见状态码说明\r\n" +
+                    "effectNo\t当前票号\teffectNo\t是\t";
+        var prefix = ctx + "gencode/getandset";
+
+        $(function() {
+            $("textarea[name='requestStr']").attr("placeholder", exampleStr);
+
+        });
+
+        function downloadFileGen() {
+
+            downloadFile(fileName, content)
+        }
+        /**
+         * js 页面实现下载功能
+         * fileName 文件名
+         * content 文件内容
+         */
+        function downloadFile(fileName, content) {
+
+            console.log(fileName);
+            // 创建隐藏的可下载链接
+            var eleLink = document.createElement('a');
+            eleLink.download = fileName;
+            eleLink.style.display = 'none';
+            // 字符内容转变成blob地址
+            var blob = new Blob([content]);
+            eleLink.href = URL.createObjectURL(blob);
+            // 触发点击
+            document.body.appendChild(eleLink);
+            eleLink.click();
+            // 然后移除
+            document.body.removeChild(eleLink);
+        }
+
+        /**
+         * 提供标签ID,复制标签内容到剪切板
+         * @param id
+         */
+        function copyStr(id) {
+            try {
+                $("#" + id).select();
+                document.execCommand("copy");
+                $.modal.msgSuccess("复制成功");
+            } catch (e) {
+                $.modal.alertError("复制失败！");
+            }
+        }
+
+        /**
+         * form表单清空
+         */
+        function resetForm() {
+            $('form')[0].reset();
+            $('form')[1].reset();
+
+        }
+
+        /**
+         * ajax 异步请求
+         * @param isDownload 是否调用下载功能
+         */
+        function docToJavabean() {
+            if ($.validate.form()) {
+                //存放最终生成的结果
+                var codeResult = "";
+                var data = $.common.formToJSON("docToBavaBeanRQ");
+                if(isEmpty(data.requestStr)){
+                    $("textarea[name='requestStr']").val(exampleStr)
+                    data.requestStr = exampleStr;
+                }
+                //set值所在列
+                var setIndex = data.columnset;
+                //get值所在列
+                var getIndex = data.columnget;
+                //get对象名
+                var getObjName = data.nameset;
+                //set对象名
+                var setObjName = data.nameget;
+                var getsetTitle =
+                        "                //取值字段 -> 赋值字段 - 字段说明\n";
+                codeResult += getsetTitle;
+                var getsetTemplate =
+                                "                //{setName} -> {getName} - {remark}\n"+
+                                "                String {getName} = {getObjName}.get{getNameFirstUpper}();\n"+
+                                "                {setObjName}.set{setNameFirstUpper}({getName});\n";
+                var requestStr = data.requestStr;
+                requestStr = requestStr.replaceAll(data.replaceStr,"");
+                var split = requestStr.split("\r\n");
+                for(var i=0;i<split.length;i++){
+                    var rowStr = split[i];
+                    if (rowStr.trim().length <= 0) {
+                        continue;
+                    }
+                    var rowArr = rowStr.split("\t");
+                    var formatParam = {
+                        "setName":rowArr[setIndex],
+                        "getName":rowArr[getIndex],
+                        //过滤掉setName、getName后其他的数据使用分号；进行拼接
+                        "remark":$.grep( rowArr, function(n,ii){return (ii != setIndex && ii != getIndex);}).join(";"),
+                        "setNameFirstUpper":rowArr[setIndex].firstUpper(),
+                        "getNameFirstUpper":rowArr[getIndex].firstUpper(),
+                        "setObjName":setObjName,
+                        "getObjName":getObjName
+                    }
+                    codeResult += getsetTemplate.format(formatParam);
+
+                }
+                $("#remarkrq").val(codeResult);
+
+            }else {
+                alert("校验失败")
+            }
+        }
+    </script>
+</body>
+</html>

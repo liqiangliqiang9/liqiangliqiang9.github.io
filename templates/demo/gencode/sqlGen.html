@@ -71,11 +71,24 @@
         </div>
     </div>
     <script >includeResourse('footer')</script>
+    <script >includeResourse('jsutils')</script>
     <script th:inline="javascript">
-
+        var exampleStr = 
+                    "        prt.TICKET_NO AS ticketNo,/* 电子票号 */\n" +
+                    "        SUBSTR(bet.PJ_NO,5) as pjNo,/* 纸票号 */\n" +
+                    "        bet.real_price as realPrice,/** 实际票价 */\n" +
+                    "        prt.TP_MONERY as tpMonery,/** 退票金额 */\n" +
+                    "        prt.TP_SXMONERY as tpSxmoney,/* 退票手续费 */\n" +
+                    "        brr.SHORT_MESSAGE as shortMessage,/* 退票原因 */\n" +
+                    "        prt.TP_USER as tpUser,/* 退票人ID */\n" +
+                    "        prt.TP_USER_NAME as tpUserName,/* 退票人 */\n" +
+                    "        prt.TP_ADDRESS as tpAddress,/* 退票窗口ID */\n" +
+                    "        prt.TP_ADDRESS_NAME as tpAddressName,/* 退票窗口 */\n" +
+                    "        DATE_FORMAT(prt.TP_TIME,'%Y-%m-%d %H:%i:%s') as tpTime,/* 退票时间 */\n" +
+                    "        DATE_FORMAT(bet.flight_time,'%Y-%m-%d %H:%i:%s') as flightTime,/* 航班日期 */"
 
         $(function() {
-
+            //$("textarea[name='requestStr']").attr("placeholder", exampleStr);
         });
         function copyStr(id) {
             try {
@@ -97,6 +110,10 @@
             if ($.validate.form()) {
 
                 var data = $.common.formToJSON("docToBavaBeanRQ");
+                if(isEmpty(data.requestStr)){
+                    $("textarea[name='requestStr']").val(exampleStr)
+                    data.requestStr = exampleStr;
+                }
                 console.log(data);
                 $.modal.msgSuccess("成功");
                 //正则表达式，得到sql字段名及注释

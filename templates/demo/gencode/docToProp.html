@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('doc生成Prop')" />
+    <script src="../../../static/js/common.js"></script>
+    <script >includeResourse('header','doc生成Prop')</script>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form class="form-horizontal " id="RQ">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span style="color: red; ">*</span>prop：</label>
+                            <div class="col-sm-10">
+                                <textarea name="requestStr" wrap="off" class="form-control" style="height: 160px;" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-rounded btn-sm" onclick="docToProp(false)" shiro:hasPermission="gencode:doctoprop:gen"><i class="fa fa-search"></i>&nbsp;生成</a>
+                    <a class="btn btn-primary btn-rounded btn-sm" onclick="docToProp(true)" shiro:hasPermission="gencode:doctoprop:gen"><i class="fa fa-search"></i>&nbsp;生成方法</a>
+                    <a class="btn btn-warning btn-rounded btn-sm" onclick="resetForm();"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                <form class="form-horizontal " id="RS">
+<!--                    <div class="form-group">
+                        <label class="col-sm-1 control-label">负责人手机：</label>
+                        <div class="col-sm-5">
+                            <input name="phone" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">操作URL：</label>
+                        <div class="col-sm-5">
+                            <textarea name="provrequest" wrap="off" class="form-control"></textarea>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" title="点击复制到剪切板" onclick="copyStr('coderq')">Code：</label>
+                        <div class="col-sm-11">
+                            <textarea name="coderq" id="coderq" wrap="off"   class="form-control" style="height: 333px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" title="点击复制到剪切板"  onclick="copyStr('testrq')">Test：</label>
+                        <div class="col-sm-11">
+                            <textarea name="testrq" id="testrq" wrap="off"   class="form-control" style="height: 333px;"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script >includeResourse('footer')</script>
+    <script >includeResourse('jsutils')</script>
+    <script th:inline="javascript">
+        /** 示例代码*/
+        var exampleStr = 
+                    "#生产环境远程请求地址\r\n" +
+                    "REQUEST_HOST=https://trade.yun-bus.com\r\n" +
+                    "#访问用户唯一标识\r\n" +
+                    "ACCOUNTID=728612500001\r\n" +
+                    "#访问用户key\r\n" +
+                    "ACCOUNTKEY=77227334";        
+        var prefix = ctx + "gencode/doctoprop";
+
+        $(function() {
+            $("textarea[name='requestStr']").attr("placeholder", exampleStr);
+        });
+        function copyStr(id) {
+            try {
+                $("#" + id).select();
+                document.execCommand("copy");
+                $.modal.msgSuccess("复制成功");
+            } catch (e) {
+                $.modal.alertError("复制失败！");
+            }
+        }
+
+        function  resetForm() {
+            $('form')[0].reset();
+            $('form')[1].reset();
+        }
+
+        var methodTemp = "    /**\n"+
+            "     * 测试配置文件注入静态变量\n"+
+            "     */\n"+
+            "    @Test\n"+
+            "    public void testConfig(){\n";
+        var methodTempEnd = "    }\n";
+        function docToProp(ismthod) {
+            var codeResult = "";
+            var testResult = "";
+            var constTemp =
+                    "    /** {fieldComment} */\n"+
+                    "    public static String {fieldName};\n"+
+                    "    @Autowired(required = false)\n"+
+                    "    public void set{fieldFirstUpperName}(@Value(\"${{fieldName}}\")String {fieldName}) {\n"+
+                    "        ConstantValue.{fieldName} = {fieldName};\n"+
+                    "    }\n";
+            var testTemplate =
+                    "        //{fieldComment}：{referenseValue}\n" +
+                    "        System.out.println(\"{fieldName}:\"+ConstantValue.{fieldName});\n";
+            var data = $.common.formToJSON("RQ");
+            if(isEmpty(data.requestStr)){
+                $("textarea[name='requestStr']").val(exampleStr)
+                data.requestStr = exampleStr;
+            }
+            var requestStr = data.requestStr;
+            var split = requestStr.split("\r\n");
+            for(var i=0;i<split.length;i++){
+                var formatParam = {
+                    "fieldComment":"",
+                    "fieldName":"",
+                    "fieldFirstUpperName":"",
+                    "referenseValue":""
+                }
+                var rowStr = split[i];
+                if(rowStr.startWith("#")){
+                    formatParam.fieldComment = rowStr.substr(1);
+                    rowStr = split[++i];
+                    var fieldArr = rowStr.split(/ *= */);
+                    formatParam.fieldName = fieldArr[0];
+                    formatParam.fieldFirstUpperName = fieldArr[0].firstUpper();
+                    formatParam.referenseValue = fieldArr[1];
+                }
+                codeResult +=constTemp.format(formatParam);
+                testResult +=testTemplate.format(formatParam);
+            }
+            $("#coderq").val(codeResult);
+            ismthod?$("#testrq").val(methodTemp+testResult+methodTempEnd):$("#testrq").val(testResult);
+        }
+    </script>
+</body>
+</html>

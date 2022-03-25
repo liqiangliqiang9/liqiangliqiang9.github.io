@@ -253,6 +253,9 @@ function includeResourse(typeInfo,titleText){
     if("flot"==typeInfo){
         document.write("<script src=\'"+ctx_static+"/ajax/libs/flot/jquery.flot.js'></script>");
     }
+    if("jsutils"==typeInfo){
+        document.write("<script src=\'"+ctx_static+"/js/jsutils.js'></script>");
+    }
 }
 
 

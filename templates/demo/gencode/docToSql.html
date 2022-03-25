@@ -56,6 +56,7 @@
         </div>
     </div>
     <script >includeResourse('footer')</script>
+    <script >includeResourse('jsutils')</script>
     <script th:inline="javascript">
 
         $(function() {
@@ -81,6 +82,10 @@
             if ($.validate.form()) {
 
                 var data = $.common.formToJSON("docToBavaBeanRQ");
+                if(isEmpty(data.requestStr)){
+                    $("textarea[name='requestStr']").val(exampleStr)
+                    data.requestStr = exampleStr;
+                }
                 console.log(data);
                 var requestStr = data.requestStr;//字段信息
                 var tableName = data.tableName;//表名
@@ -171,18 +176,6 @@
                 }
             }
             return result;
-        }
-        /**
-         * 验证是否非空，空 true 非空 false
-         * @param value
-         * @returns {boolean|*}
-         */
-        function valEmpty(value){
-            if(typeof value === 'undefined' || value === null || value === ""){
-                return true;
-            }else{
-                return false;
-            }
         }
     </script>
 </body>
